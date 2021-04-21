@@ -9,6 +9,11 @@ class UE4AS_API AGamePlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+private :
+	// 조종하는 플레이어 컨트롤러를 나타냅니다.
+	UPROPERTY()
+	class AGamePlayerControllerBase* PlayerController;
+
 public:
 	AGamePlayerCharacter();
 
@@ -16,6 +21,7 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+	virtual void PossessedBy(AController* NewController) override;
 	virtual void Tick(float DeltaTime) override;
 
 	// [프로젝트 세팅 -> 입력] 에 매핑한 키 입력 이벤트를 폰에 등록합니다.
