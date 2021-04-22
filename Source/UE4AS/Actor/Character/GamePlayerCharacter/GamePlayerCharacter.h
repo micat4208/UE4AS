@@ -10,6 +10,10 @@ class UE4AS_API AGamePlayerCharacter : public ACharacter
 	GENERATED_BODY()
 
 private :
+	// UPlayerCharacterAnimInstance 와 상속 관계에 있는 클래스를 나타냅니다.
+	TSubclassOf<class UPlayerCharacterAnimInstance> BP_PlayerCharacterAnimInstance;
+
+private :
 	// 조종하는 플레이어 컨트롤러를 나타냅니다.
 	UPROPERTY()
 	class AGamePlayerControllerBase* PlayerController;

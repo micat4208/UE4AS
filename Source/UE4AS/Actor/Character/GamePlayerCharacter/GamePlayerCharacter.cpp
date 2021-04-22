@@ -2,9 +2,15 @@
 
 #include "Actor/PlayerController/GamePlayerControllerBase.h"
 
+#include "AnimInstance/PlayerCharacterAnimInstance.h"
+
 AGamePlayerCharacter::AGamePlayerCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	static ConstructorHelpers::FClassFinder<UPlayerCharacterAnimInstance> BP_PLAYER_CHAR_ANIM_INST(
+		TEXT("AnimBlueprint'/Game/Blueprints/AnimInstances/BP_PlayerCharacterAnimInstance.BP_PlayerCharacterAnimInstance_C'"));
+	if (BP_PLAYER_CHAR_ANIM_INST.Succeeded()) BP_PlayerCharacterAnimInstance = BP_PLAYER_CHAR_ANIM_INST.Class;
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_BODY(
 		TEXT("SkeletalMesh'/Game/Resources/Character/SK_Penguin.SK_Penguin'"));
@@ -12,6 +18,7 @@ AGamePlayerCharacter::AGamePlayerCharacter()
 	/// - ConstructorHelpers : 생성자에서 Asset 을 불러오는 작업을 도와주는 기능을 제공하는 클래스
 	/// - FObjectFinder : Asset 의 내용물을 얻어오는 형식
 	/// - FClassFinder : Asset 의 UClass 을 얻어오는 형식
+	///   경로의 끝에 _C 를 작성합니다.
 	
 	// Skeletal Mesh Component 의 상대적 위치 / 회전을 설정합니다.
 	//GetMesh()->SetRelativeLocation(FVector::UpVector * -88.0f);
@@ -20,6 +27,9 @@ AGamePlayerCharacter::AGamePlayerCharacter()
 	GetMesh()->SetRelativeLocationAndRotation(
 		FVector::UpVector * -88.0f,
 		FRotator(0.0f, -90.0f, 0.0f) );
+
+	// Anim Instance 클래스 등록
+	GetMesh()->SetAnimInstanceClass(BP_PlayerCharacterAnimInstance);
 
 }
 

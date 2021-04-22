@@ -1,0 +1,50 @@
+[
+	{
+		"Name": "0",
+		"DropObjectType": "Fish",
+		"Mesh": "StaticMesh'/Game/Resources/Drop/Fish/Carp.Carp'",
+		"ChangeHpValue": 30
+	},
+	{
+		"Name": "1",
+		"DropObjectType": "Fish",
+		"Mesh": "StaticMesh'/Game/Resources/Drop/Fish/Drum.Drum'",
+		"ChangeHpValue": 25
+	},
+	{
+		"Name": "2",
+		"DropObjectType": "Fish",
+		"Mesh": "StaticMesh'/Game/Resources/Drop/Fish/Bluegill.Bluegill'",
+		"ChangeHpValue": 40
+	},
+	{
+		"Name": "3",
+		"DropObjectType": "Trash",
+		"Mesh": "StaticMesh'/Game/Resources/Drop/Trash/Battery1.Battery1'",
+		"ChangeHpValue": 10
+	},
+	{
+		"Name": "4",
+		"DropObjectType": "Trash",
+		"Mesh": "StaticMesh'/Game/Resources/Drop/Trash/Bottle1.Bottle1'",
+		"ChangeHpValue": 30
+	},
+	{
+		"Name": "5",
+		"DropObjectType": "Trash",
+		"Mesh": "StaticMesh'/Game/Resources/Drop/Trash/BottleOfBeer.BottleOfBeer'",
+		"ChangeHpValue": 40
+	},
+	{
+		"Name": "6",
+		"DropObjectType": "Trash",
+		"Mesh": "StaticMesh'/Game/Resources/Drop/Trash/BottleOfWater.BottleOfWater'",
+		"ChangeHpValue": 15
+	},
+	{
+		"Name": "7",
+		"DropObjectType": "Trash",
+		"Mesh": "StaticMesh'/Game/Resources/Drop/Trash/Brick2.Brick2'",
+		"ChangeHpValue": 50
+	}
+]

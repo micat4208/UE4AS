@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
@@ -11,8 +11,8 @@ class UE4AS_API UPlayerCharacterAnimInstance final :
 	GENERATED_BODY()
 
 protected :
-	// ÀÌ AnimInstance ¸¦ »ç¿ëÇÏ´Â Pawn ÀÇ ¼Ó·ÂÀ» ³ªÅ¸³À´Ï´Ù.
-	/// ºí·çÇÁ¸°Æ®¿¡¼­ ÀĞ±â Àü¿ëÀ¸·Î ÀÌ ÇÊµå¸¦ ³ëÃâ½ÃÅµ´Ï´Ù.
+	// ì´ AnimInstance ë¥¼ ì‚¬ìš©í•˜ëŠ” Pawn ì˜ ì†ë ¥ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.
+	/// ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì½ê¸° ì „ìš©ìœ¼ë¡œ ì´ í•„ë“œë¥¼ ë…¸ì¶œì‹œí‚µë‹ˆë‹¤.
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float Speed;
 

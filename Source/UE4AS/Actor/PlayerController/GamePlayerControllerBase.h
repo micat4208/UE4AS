@@ -13,7 +13,6 @@ class UE4AS_API AGamePlayerControllerBase :
 protected :
 	virtual void BeginPlay() override;
 
-
 private :
 	// 카메라 뷰를 설정합니다.
 	void SetCameraView();
