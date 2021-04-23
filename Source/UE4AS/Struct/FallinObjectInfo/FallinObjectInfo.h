@@ -27,7 +27,7 @@ struct UE4AS_API FFallinObjectInfo :
 public :
 	// FallinObject 타입
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "타입")
-	EFallinObjectType DropObjectType;
+	EFallinObjectType FallinObjectType;
 
 	// FallinObject Mesh
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "기본")
