@@ -27,7 +27,17 @@ private :
 	/// - UIMin, Max : 슬라이더를 통하여 설정할 수 있는 값의 최소, 최대 값을 지정합니다.
 	///   슬라이더를 조종하는 것이 아닌, 값을 입력할 경우 범위를 초과한 값이 입력되어도 범위 내의 값으로 설정되지 않습니다.
 	/// - C++ 코드에서 값을 제어하는 경우 범위는 무시됩니다.
+	
+	// 현재 딜레이를 나타낼 필드
+	float CurrentDelay;
 
+	// 초기 딜레이
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	float BeginDelay;
+
+	// 마지막 딜레이
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
+	float FinalDelay;
 
 
 public:	

@@ -17,6 +17,8 @@ void USpawnFallinObjectComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	CurrentDelay = BeginDelay;
+
 	InitializeDropObjectInfos();
 
 	CreateFallinObject();
@@ -25,6 +27,11 @@ void USpawnFallinObjectComponent::BeginPlay()
 void USpawnFallinObjectComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if (CurrentDelay > FinalDelay)
+		CurrentDelay -= DeltaTime * 0.05f;
+
+	else CurrentDelay = FinalDelay;
 }
 
 void USpawnFallinObjectComponent::InitializeDropObjectInfos()
@@ -75,6 +82,13 @@ void USpawnFallinObjectComponent::CreateFallinObject()
 			EFallinObjectType::Fish : EFallinObjectType::Trash),
 		FMath::FRandRange(600.0f, 800.0f)
 	);
+
+	// 타이머를 실행시킵니다.
+	FTimerHandle timerHandle;
+	FTimerDelegate timerDelegate;
+	timerDelegate.BindUObject(this, &USpawnFallinObjectComponent::CreateFallinObject);
+	GetWorld()->GetTimerManager().SetTimer(timerHandle, timerDelegate, CurrentDelay, false);
+	/// - 타이머 : 정의한 시간마다 특정한 동작을 수행하는 기능을 의미합니다.
 
 }
 

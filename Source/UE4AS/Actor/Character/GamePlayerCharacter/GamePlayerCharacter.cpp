@@ -31,6 +31,8 @@ AGamePlayerCharacter::AGamePlayerCharacter()
 	// Anim Instance 클래스 등록
 	GetMesh()->SetAnimInstanceClass(BP_PlayerCharacterAnimInstance);
 
+	// 초기 체력을 설정합니다.
+	Hp = 50.0f;
 }
 
 void AGamePlayerCharacter::BeginPlay()

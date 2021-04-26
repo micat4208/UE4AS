@@ -18,6 +18,9 @@ private :
 	UPROPERTY()
 	class AGamePlayerControllerBase* PlayerController;
 
+	// 캐릭터 체력을 나타냅니다.
+	float Hp;
+
 public:
 	AGamePlayerCharacter();
 
@@ -34,4 +37,10 @@ public:
 
 private :
 	void InputHorizontal(float axis);
+
+public :
+	// 현재 체력 값을 반환합니다.
+	FORCEINLINE float GetHp() const
+	{ return Hp; }
+
 };

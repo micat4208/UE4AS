@@ -1,7 +1,7 @@
 #include "ModeGame.h"
 
 #include "Actor/Character/GamePlayerCharacter/GamePlayerCharacter.h"
-#include "Actor/PlayerController/GamePlayerControllerBase.h"
+#include "Actor/PlayerController/GamePlayerController/GamePlayerController.h"
 
 AModeGame::AModeGame()
 {
@@ -12,5 +12,5 @@ AModeGame::AModeGame()
 	/// Type::StaticClass() : Type 의 UClass 를 얻습니다.
 	
 	// 사용할 플레이어 컨트롤러를 설정합니다.
-	PlayerControllerClass = AGamePlayerControllerBase::StaticClass();
+	PlayerControllerClass = AGamePlayerController::StaticClass();
 }
