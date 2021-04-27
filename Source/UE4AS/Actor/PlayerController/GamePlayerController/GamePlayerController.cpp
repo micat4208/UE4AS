@@ -1,5 +1,7 @@
 #include "GamePlayerController.h"
 
+#include "Actor/Character/GamePlayerCharacter/GamePlayerCharacter.h"
+
 #include "Widget/GameWidget/GameWidget.h"
 
 AGamePlayerController::AGamePlayerController(const FObjectInitializer& ObjectInitializer) : 
@@ -17,5 +19,7 @@ void AGamePlayerController::OnPossess(APawn* aPawn)
 	// 困连 剁快绰 规过
 	/// - CreateWidget<WidgetType>(困连 按眉甫 家蜡且 按眉, 剁匡 困连 UClass);
 	/// - 积己等 困连 按眉->AddToViewport()
-	CreateWidget<UGameWidget>(this, BP_GameWidget)->AddToViewport();
+	UGameWidget* gameWidget = CreateWidget<UGameWidget>(this, BP_GameWidget);
+	gameWidget->AddToViewport();
+	gameWidget->InitializeGameWidget(Cast<AGamePlayerCharacter>(aPawn));
 }

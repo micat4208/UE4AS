@@ -43,4 +43,14 @@ private :
 	// 떨어지는 이동을 구현합니다.
 	void FallDown(float dt);
 
+private :
+	UFUNCTION()
+	void OnOverlapped(
+		UPrimitiveComponent* OverlappedComponent, 
+		AActor* OtherActor, 
+		UPrimitiveComponent* OtherComp, 
+		int32 OtherBodyIndex, 
+		bool bFromSweep, 
+		const FHitResult& SweepResult);
+
 };

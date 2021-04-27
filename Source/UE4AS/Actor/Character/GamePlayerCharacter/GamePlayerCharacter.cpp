@@ -33,6 +33,7 @@ AGamePlayerCharacter::AGamePlayerCharacter()
 
 	// 초기 체력을 설정합니다.
 	Hp = 50.0f;
+
 }
 
 void AGamePlayerCharacter::BeginPlay()
