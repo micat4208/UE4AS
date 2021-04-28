@@ -1,6 +1,10 @@
 #include "FallinObject.h"
 
 #include "GameFramework/RotatingMovementComponent.h"
+#include "GameFramework/DamageType.h"
+
+#include "Actor/Character/GamePlayerCharacter/GamePlayerCharacter.h"
+
 
 AFallinObject::AFallinObject()
 {
@@ -53,6 +57,7 @@ void AFallinObject::InitializeFallinObject(FFallinObjectInfo* fallinObjInfo, flo
 		FRotator(0.0f, 0.0f, -180.0f);
 }
 
+
 void AFallinObject::FallDown(float dt)
 {
 	FVector currentLocation = GetActorLocation();
@@ -82,10 +87,33 @@ void AFallinObject::OnOverlapped(
 	bool					bFromSweep, 		 /// - 액터가 이동할 때 Sweep 이벤트를 발생시키도록 하여 발생한 이벤트인지가 전달됩니다.
 	const FHitResult&		SweepResult)		 /// - Sweep 이벤트 발생 시 자세한 결과를 담고 있는 데이터가 전달됩니다.
 {
-	if (IsValid(OtherActor))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("OtherActor->Name : %s"), *OtherActor->GetFName().ToString());
-	}
+	// 겹친 액터가 플레이어인지 확인합니다.
+	///if (OtherActor->GetClass() == AGamePlayerCharacter::StaticClass());
+	/// - 겹친 액터의 UClass 를 확인합니다.
+	///if (OtherActor->ActorHasTag(FName(TEXT("PlayerCharacter"))));
+	/// - 겹친 액터의 Tag 를 확인합니다.
 
+	// 겹친 액터가 플레이어 캐릭터 액터인지 확인합니다.
+	AGamePlayerCharacter* gamePlayerCharacter = Cast<AGamePlayerCharacter>(OtherActor);
+	if (IsValid(gamePlayerCharacter))
+	{
+		float damage = FallinObjectInfo->ChangeHpValue;
+
+		UGameplayStatics::ApplyDamage(
+			gamePlayerCharacter,
+			((FallinObjectInfo->FallinObjectType == EFallinObjectType::Fish) ? damage : -damage),
+			nullptr, 
+			this,
+			UDamageType::StaticClass());
+		/// - ApplyDamage(
+		///      AActor*					DamagedActor,	 : 대미지를 가할 액터를 나타냅니다.
+		///      float						BaseDamage,		 : 가할 대미지를 나타냅니다.
+		///      AController*				EventInstigator, : 대미지를 입히는 컨트롤러를 나타냅니다.
+		///      AActor*					DamageCauser, 	 : 대미지를 입히는 액터를 나타냅니다.
+		///      TSubclassOf<UDamageType>	DamageTypeClass) : 대미지 타입을 설명하는 UClass 를 나타냅니다.
+		/// - DamagedActor 에게 피해를 가합니다.
+		/// - 이 메서드를 호출하면 DamagedActor 의 OnTakeAnyDamage 대리자가 호출됩니다.
+
+	}
 }
 

@@ -32,14 +32,27 @@ AGamePlayerCharacter::AGamePlayerCharacter()
 	GetMesh()->SetAnimInstanceClass(BP_PlayerCharacterAnimInstance);
 
 	// 초기 체력을 설정합니다.
-	Hp = 50.0f;
+	TargetHp = Hp = 50.0f;
 
+	// 이동 속도 설정
+	GetCharacterMovement()->MaxWalkSpeed = 900.0f;
+
+	// 점프 가속력 설정
+	GetCharacterMovement()->JumpZVelocity = 1200.0f;
+
+	// 캐릭터가 받는 중력 설정
+	GetCharacterMovement()->GravityScale = 2.7f;
 }
 
 void AGamePlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// GamePlayerCharacter 액터에게 Tag 를 추가합니다.
+	Tags.Add(FName(TEXT("PlayerCharacter")));
+
+	// 이 액터가 피해를 입었을 경우 호출할 메서드 바인딩
+	OnTakeAnyDamage.AddDynamic(this, &AGamePlayerCharacter::OnHit);
 }
 
 void AGamePlayerCharacter::PossessedBy(AController* NewController)
@@ -54,6 +67,7 @@ void AGamePlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	Hp = FMath::FInterpTo(Hp, TargetHp, DeltaTime, 5.0f);
 }
 
 void AGamePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -61,6 +75,7 @@ void AGamePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAxis(TEXT("Horizontal"), this, &AGamePlayerCharacter::InputHorizontal);
+	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &AGamePlayerCharacter::InputJump);
 
 }
 
@@ -87,5 +102,21 @@ void AGamePlayerCharacter::InputHorizontal(float axis)
 		PlayerController->SetControlRotation(
 			FRotator(0.0f, 90.0f * -axis, 0.0f) );
 	}
+}
+
+void AGamePlayerCharacter::InputJump()
+{
+	Jump();
+}
+
+void AGamePlayerCharacter::AddHp(float add)
+{
+	TargetHp = FMath::Clamp(TargetHp + add, 0.0f, 100.0f);
+	/// - Clamp(x, min, max) : x 의 값을 min 과 max 사이의 값으로 변경하여 반환합니다.
+}
+
+void AGamePlayerCharacter::OnHit(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+{
+	AddHp(Damage);
 }
 

@@ -18,6 +18,9 @@ private :
 	UPROPERTY()
 	class AGamePlayerControllerBase* PlayerController;
 
+	// 목표 체력을 나타냅니다.
+	float TargetHp;
+
 	// 캐릭터 체력을 나타냅니다.
 	float Hp;
 
@@ -37,10 +40,29 @@ public:
 
 private :
 	void InputHorizontal(float axis);
+	void InputJump();
 
 public :
 	// 현재 체력 값을 반환합니다.
 	FORCEINLINE float GetHp() const
 	{ return Hp; }
+
+	// Hp 에 값을 더합니다.
+	void AddHp(float add);
+
+private :
+	// 대미지를 입었을 경우 호출될 메서드
+	UFUNCTION()
+	void OnHit(
+		AActor*						DamagedActor,
+		float						Damage,
+		const class UDamageType*	DamageType,
+		class AController*			InstigatedBy,
+		AActor*						DamageCauser);
+	/// - DamagedActor	: 대미지를 입은 액터를 나타냅니다.
+	/// - Damage		: 입은 피해를 나타냅니다.
+	/// - DamageType	: 대미지 타입이 전달됩니다.
+	/// - InstigatedBy	: 피해를 준 컨트롤러가 전달됩니다.
+	/// - DamageCauser	: 피해를 준 액터가 전달됩니다.
 
 };
