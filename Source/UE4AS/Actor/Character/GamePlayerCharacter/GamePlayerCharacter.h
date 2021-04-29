@@ -4,10 +4,33 @@
 #include "GameFramework/Character.h"
 #include "GamePlayerCharacter.generated.h"
 
+
+// 이벤트
+/// - 선언된 클래스 내에서만 호출할 수 있는 Multicast Delegate 입니다.
+
+// 선언
+/// - DECLARE_EVENT(OwningType, EventName) : 이벤트를 생성합니다.
+/// - DECLARE_EVENT_OneParam(OwningType, EventName, Param1Type) : 매개 변수가 하나인 이벤트를 생성합니다.
+/// - DECLARE_EVENT_TwoParams(OwningType, EventName, Param1Type, Param2Type) : 매개 변수가 둘인 이벤트를 생성합니다.
+
+// 대리자와 다른 점
+/// - 대리자는 선언된 클래스 외부에서도 호출될 수 있지만, 이벤트는 외부에서 호출될 수 없음.
+/// - 대리자는 반환 타입을 설정할 수 있지만, 이벤트는 무조건 void 만 가능.
+/// - Multicast Delegate 는 Broadcast() 를 통해 바인딩된 메서드 / 함수를 호출할 수 있으며,
+///   만약 바인딩되지 않은 상태에서 Broadcast() 가 호출된다면 위험함.
+///   -> IsBound() 를 통해 바인딩된 메서드 존재 여부를 확인하는 작업이 꼭 필요함.
+///   이벤트는 바인딩이 되지 않은 상태에서 Broadcast() 가 이루어져도 안전합니다.
+
+DECLARE_EVENT(AGamePlayerCharacter, FCharacterDieEvent)
+
 UCLASS()
 class UE4AS_API AGamePlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
+
+public :
+	// 캐릭터 사망 시 발생하는 이벤트
+	FCharacterDieEvent CharacterDieEvent;
 
 private :
 	// UPlayerCharacterAnimInstance 와 상속 관계에 있는 클래스를 나타냅니다.
@@ -23,6 +46,9 @@ private :
 
 	// 캐릭터 체력을 나타냅니다.
 	float Hp;
+
+	// 캐릭터 사망 상태를 나타냅니다.
+	bool bIsDie;
 
 public:
 	AGamePlayerCharacter();

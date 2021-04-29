@@ -2,6 +2,13 @@
 
 #include "EngineMinimal.h"
 
+
+#ifndef CUSTOM_LOG_DEFINE
+#define CUSTOM_LOG_DEFINE
+#define LOG(_log_, ...) UE_LOG(LogTemp, Warning, _log_, ##__VA_ARGS__)
+
+#endif
+
 // Unreal Engine 은 Native C++ 과 다르게 리플렉션 시스템을 지원합니다.
 /// - 리플렉션 시스템
 ///   - 프로그램이 실행 시간에 자기 자신을 조사할 수 있는 기능을 의미합니다.

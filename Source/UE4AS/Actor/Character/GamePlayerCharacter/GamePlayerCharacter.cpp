@@ -34,6 +34,8 @@ AGamePlayerCharacter::AGamePlayerCharacter()
 	// 초기 체력을 설정합니다.
 	TargetHp = Hp = 50.0f;
 
+	bIsDie = false;
+
 	// 이동 속도 설정
 	GetCharacterMovement()->MaxWalkSpeed = 900.0f;
 
@@ -68,6 +70,16 @@ void AGamePlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	Hp = FMath::FInterpTo(Hp, TargetHp, DeltaTime, 5.0f);
+
+	// 캐릭터 사망 처리
+	if (!bIsDie && (Hp <= 0.1f && FMath::IsNearlyZero(TargetHp)))
+		/// - IsNearlyZero(float f) : f 의 값이 0 에 근접한 값이라면 true 를 반환합니다.
+	{
+		bIsDie = true;
+
+		// 캐릭터 사망 이벤트
+		CharacterDieEvent.Broadcast();
+	}
 }
 
 void AGamePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
