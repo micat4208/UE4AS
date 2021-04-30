@@ -16,7 +16,7 @@ void UGameWidget::NativeConstruct()
 	// GameOver 패널을 숨긴 상태로 시작합니다.
 	Overlay_GameOver->SetVisibility(ESlateVisibility::Collapsed);
 
-	TimerCount = 3;
+	TimerCount = 2;
 }
 
 void UGameWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
