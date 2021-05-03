@@ -1,4 +1,7 @@
 ﻿#include "GameWidget.h"
+
+#include "Single/ASGameInstance.h"
+
 #include "Actor/Character/GamePlayerCharacter/GamePlayerCharacter.h"
 
 #include "Components/Image.h"
@@ -46,7 +49,9 @@ void UGameWidget::InitializeGameWidget(AGamePlayerCharacter* playerCharacter)
 						// 타이머 종료
 						GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 
-						LOG(TEXT("Timer Fin!"));
+						// TitleMap 으로 전환시킵니다.
+						UGameplayStatics::OpenLevel(GetWorld(), TEXT("TitleMap"));
+
 						return;
 					}
 
@@ -64,6 +69,19 @@ void UGameWidget::InitializeGameWidget(AGamePlayerCharacter* playerCharacter)
 			GetWorld()->GetTimerManager().SetTimer(TimerHandle, timerDelegate, 1.0f, true);
 
 
+		});
+
+	// 점수 갱신
+	PlayerCharacter->OnOverlapEvent.AddLambda([this]()
+		{
+			// 현재 점수를 얻습니다.
+			float currentScore = GetGameInstance<UASGameInstance>()->GetCurrentScore();
+
+			// 표시시킬 문자열을 나타냅니다.
+			FString text = FString::Printf(
+				TEXT("현재 점수\n%.2f"), currentScore);
+
+			Text_Score->SetText(FText::FromString(text));
 		});
 }
 

@@ -10,6 +10,9 @@ class UE4AS_API UTitleWidget : public UUserWidget
 	GENERATED_BODY()
 
 private:
+	UPROPERTY(meta = (BindWidgetAnim))
+	class UWidgetAnimation * Floating_Logo;
+
 	UPROPERTY(meta = (BindWidget))
 		class UButton* Button_GameStart;
 

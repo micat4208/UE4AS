@@ -22,4 +22,10 @@ void AGamePlayerController::OnPossess(APawn* aPawn)
 	UGameWidget* gameWidget = CreateWidget<UGameWidget>(this, BP_GameWidget);
 	gameWidget->AddToViewport();
 	gameWidget->InitializeGameWidget(Cast<AGamePlayerCharacter>(aPawn));
+
+	// 커서를 숨깁니다.
+	bShowMouseCursor = false;
+
+	// 입력 모드를 GameOnly 로 설정합니다.
+	SetInputMode(FInputModeGameOnly());
 }

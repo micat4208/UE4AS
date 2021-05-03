@@ -24,6 +24,9 @@ private :
 	class UTextBlock* Text_GoToTitle;
 	/// - BindWidget : 필드와 같은 형식과 이름으로 추가된 위젯을 찾아 필드에 바인딩시킵니다.
 
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock * Text_Score;
+
 private :
 	int32 TimerCount;
 	FTimerHandle TimerHandle;

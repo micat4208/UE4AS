@@ -22,6 +22,7 @@
 ///   이벤트는 바인딩이 되지 않은 상태에서 Broadcast() 가 이루어져도 안전합니다.
 
 DECLARE_EVENT(AGamePlayerCharacter, FCharacterDieEvent)
+DECLARE_EVENT(AGamePlayerCharacter, FOnOverlapEvent)
 
 UCLASS()
 class UE4AS_API AGamePlayerCharacter : public ACharacter
@@ -31,6 +32,9 @@ class UE4AS_API AGamePlayerCharacter : public ACharacter
 public :
 	// 캐릭터 사망 시 발생하는 이벤트
 	FCharacterDieEvent CharacterDieEvent;
+
+	// FallinObject 와 겹쳤을 경우 발생하는 이벤트
+	FOnOverlapEvent OnOverlapEvent;
 
 private :
 	// UPlayerCharacterAnimInstance 와 상속 관계에 있는 클래스를 나타냅니다.

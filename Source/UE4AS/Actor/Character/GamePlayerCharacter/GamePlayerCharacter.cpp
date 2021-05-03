@@ -1,5 +1,7 @@
 #include "GamePlayerCharacter.h"
 
+#include "Single/ASGameInstance.h"
+
 #include "Actor/PlayerController/GamePlayerControllerBase.h"
 
 #include "AnimInstance/PlayerCharacterAnimInstance.h"
@@ -55,6 +57,9 @@ void AGamePlayerCharacter::BeginPlay()
 
 	// 이 액터가 피해를 입었을 경우 호출할 메서드 바인딩
 	OnTakeAnyDamage.AddDynamic(this, &AGamePlayerCharacter::OnHit);
+
+	// 점수 리셋
+	GetGameInstance<UASGameInstance>()->ResetCurrentScore();
 }
 
 void AGamePlayerCharacter::PossessedBy(AController* NewController)
@@ -63,6 +68,14 @@ void AGamePlayerCharacter::PossessedBy(AController* NewController)
 
 	PlayerController = Cast<AGamePlayerControllerBase>(NewController);
 	/// Cast<T>(src) : src 를 T 형식으로 캐스팅합니다.
+
+	// 게임 플레이 상태로 설정
+	GetGameInstance<UASGameInstance>()->StartGame();
+
+	// 죽었을 때 게임 끝 상태로 설정
+	CharacterDieEvent.AddUObject(
+		GetGameInstance<UASGameInstance>(),
+		&UASGameInstance::EndGame);
 }
 
 void AGamePlayerCharacter::Tick(float DeltaTime)
@@ -123,12 +136,26 @@ void AGamePlayerCharacter::InputJump()
 
 void AGamePlayerCharacter::AddHp(float add)
 {
+	// 게임 플레이중이 아니라면 HP 를 변경하지 못하도록 합니다.
+	if (!GetGameInstance<UASGameInstance>()->IsPlaying()) return;
+
 	TargetHp = FMath::Clamp(TargetHp + add, 0.0f, 100.0f);
 	/// - Clamp(x, min, max) : x 의 값을 min 과 max 사이의 값으로 변경하여 반환합니다.
 }
 
-void AGamePlayerCharacter::OnHit(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+void AGamePlayerCharacter::OnHit(AActor* DamagedActor, 
+	float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
+	// 체력 변경
 	AddHp(Damage);
+
+	// 점수 변경
+	GetGameInstance<UASGameInstance>()->AddCurrentScore(Damage);
+
+	// Fallin Object 와의 겹침 이벤트 발생
+	OnOverlapEvent.Broadcast();
+
+	// 겹친 액터를 제거합니다.
+	DamageCauser->Destroy();
 }
 
