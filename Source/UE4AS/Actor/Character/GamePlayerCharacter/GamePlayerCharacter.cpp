@@ -76,6 +76,11 @@ void AGamePlayerCharacter::PossessedBy(AController* NewController)
 	CharacterDieEvent.AddUObject(
 		GetGameInstance<UASGameInstance>(),
 		&UASGameInstance::EndGame);
+
+	// 죽었을 때 최고 점수 갱신 시도
+	CharacterDieEvent.AddUObject(
+		GetGameInstance<UASGameInstance>(), &UASGameInstance::TryUpdateBestScore);
+
 }
 
 void AGamePlayerCharacter::Tick(float DeltaTime)
