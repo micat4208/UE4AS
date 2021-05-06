@@ -12,6 +12,7 @@ class UE4AS_API AGamePlayerController :
 	
 private :
 	TSubclassOf<class UGameWidget> BP_GameWidget;
+	class USoundCue* SC_GameBackground;
 
 public :
 	AGamePlayerController(const FObjectInitializer& ObjectInitializer);

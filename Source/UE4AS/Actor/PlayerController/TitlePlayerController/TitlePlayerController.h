@@ -12,6 +12,7 @@ class UE4AS_API ATitlePlayerController : public AGamePlayerControllerBase
 
 private :
 	TSubclassOf<class UTitleWidget> BP_TitleWidget;
+	class USoundCue* SC_TitleBackground;
 
 
 public:

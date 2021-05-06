@@ -1,5 +1,6 @@
 #include "GamePlayerController.h"
 
+#include "Sound/SoundCue.h"
 #include "Actor/Character/GamePlayerCharacter/GamePlayerCharacter.h"
 
 #include "Widget/GameWidget/GameWidget.h"
@@ -10,6 +11,10 @@ AGamePlayerController::AGamePlayerController(const FObjectInitializer& ObjectIni
 	static ConstructorHelpers::FClassFinder<UGameWidget> BP_GAME_WIDGET(
 		TEXT("WidgetBlueprint'/Game/Blueprints/Widget/BP_Game.BP_Game_C'"));
 	if (BP_GAME_WIDGET.Succeeded()) BP_GameWidget = BP_GAME_WIDGET.Class;
+
+	static ConstructorHelpers::FObjectFinder<USoundCue> SC_GAME_BACKGROUND(
+		TEXT("SoundCue'/Game/Resources/Sound/SC_GameBackground.SC_GameBackground'"));
+	if (SC_GAME_BACKGROUND.Succeeded()) SC_GameBackground = SC_GAME_BACKGROUND.Object;
 }
 
 void AGamePlayerController::OnPossess(APawn* aPawn)
@@ -28,4 +33,7 @@ void AGamePlayerController::OnPossess(APawn* aPawn)
 
 	// 입력 모드를 GameOnly 로 설정합니다.
 	SetInputMode(FInputModeGameOnly());
+
+	// 사운드 재생
+	UGameplayStatics::PlaySound2D(this, SC_GameBackground);
 }

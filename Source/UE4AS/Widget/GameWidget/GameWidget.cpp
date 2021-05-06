@@ -95,4 +95,5 @@ void UGameWidget::MoveCurrentImage()
 	// Image_Current 의 위치를 설정합니다.
 	currentImageSlot->SetPosition(
 		FVector2D(PlayerCharacter->GetHp() * (barSlot->GetSize().X * 0.01f), 0.0f));
+
 }

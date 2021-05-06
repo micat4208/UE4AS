@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "SaveData.generated.h"
@@ -30,5 +30,16 @@ public :
 public:
 	FSaveData();
 	FSaveData(float bestScore, FDateTime dateTime);
+
+public :
+	FORCEINLINE FText GetDateText() const
+	{
+		return FText::FromString(FString::Printf(
+			TEXT("%d %d %d - %d %d %d"),
+			Year, Month, Day, Hours, Minutes, Seconds));
+	}
+
+	FORCEINLINE FText GetScoreText() const
+	{ return FText::FromString(FString::Printf(TEXT("%.2f 점"), BestScore)); }
 
 };
